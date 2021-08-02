@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "836375235858",
+    "project_id": "flutter-news-app-19fd0",
+    "storage_bucket": "flutter-news-app-19fd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836375235858:android:ada4c16887457258cd37cb",
+        "android_client_info": {
+          "package_name": "com.example.flutter_news_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836375235858-j0hsdeppeloncfs68kjtv01601bon1p1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvyfHK9YfkEr8_fqzbRvf-vFN642tGDWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836375235858-j0hsdeppeloncfs68kjtv01601bon1p1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
