@@ -52,7 +52,7 @@ class SignInScreen extends StatelessWidget {
                 TextFormFieldWidget(
                     onChanged: (val)
                     {
-                      BlocProvider.of<SignInBloc>(context).add(SetEmailToSignInEvent(email: emailController.text));
+               //       BlocProvider.of<SignInBloc>(context).add(SetEmailToSignInEvent(email: emailController.text));
                     },
                     controller: emailController,
                     validator: (val) => signInState.isValidEmail
@@ -62,7 +62,7 @@ class SignInScreen extends StatelessWidget {
                 TextFormFieldWidget(
                     onChanged: (val)
                     {
-                      BlocProvider.of<SignInBloc>(context).add(SetPasswordToSignInEvent(password: passwordController.text));
+                   //   BlocProvider.of<SignInBloc>(context).add(SetPasswordToSignInEvent(password: passwordController.text));
                     },
                     controller: passwordController,
                     validator: (val) => signInState.isValidPassword
@@ -83,8 +83,8 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ):
                 GestureDetector(
-                  onTap: (){
-                    BlocProvider.of<SignInBloc>(context).add(SignInWithEmailEvent(email: emailController.text, password: passwordController.text));
+                  onTap:/*    (emailController.text=='' || passwordController.text=='')?(){} : */ (){
+                   BlocProvider.of<SignInBloc>(context).add(SignInWithEmailEvent(email: emailController.text, password: passwordController.text));
                   },
                   child: Container(
                     margin: EdgeInsets.only(

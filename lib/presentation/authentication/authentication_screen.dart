@@ -25,12 +25,10 @@ class AuthenticationScreen extends StatelessWidget {
       {
         if (authenticationState is AuthenticationStateSuccess)
         {
-          log('_________________');
           return HomeScreen(userRepository: _userRepository);
         }
         if (authenticationState is AuthenticationStateFailure)
         {
-          // return AuthenticationScreen(_userRepository);
           return SignInScreen(userRepository: _userRepository);
         }
         return Center(
