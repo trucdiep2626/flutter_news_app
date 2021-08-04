@@ -3,15 +3,16 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/bloc/home/home_event.dart';
 import 'package:flutter_news_app/bloc/home/home_state.dart';
-import 'package:flutter_news_app/models/news.dart';
+import 'package:flutter_news_app/models/categories_list.dart';
+import 'package:flutter_news_app/repositories/news_repository.dart';
 import 'package:flutter_news_app/repositories/user_repository.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UserRepository userRepository;
 
-  HomeBloc({required this.userRepository}) : super(HomeLoadingDataState());
+  HomeBloc({required this.userRepository}) : super(HomeLoadingDataState(selectedIndex: 0));
 
-  HomeState get initialState => HomeLoadingDataState();
+
 
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
@@ -21,15 +22,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Stream<HomeState> _mapUpdateHomeEventToState(UpdateHomeEvent event) async* {
-   // yield HomeLoadingDataState();
+   yield HomeLoadingDataState(selectedIndex: event.selectedIndex);
     try  {
-      log('))))))))))))))))))))))))))))))');
-      final news = await News().getNews();
+     // log('))))))))))))))))))))))))))))))');
+      final news = await NewsRepository().getNews(category: categories[event.selectedIndex]);
       log(news.length.toString()+'+++++++++++++++++');
-      yield HomeLoadDataSuccessState(news: news);
+      yield HomeLoadDataSuccessState(news: news,selectedIndex: event.selectedIndex);
     } catch (_) {
       log('error');
-    //  yield HomeLoadDataFailureState();
+     yield HomeLoadDataFailureState(selectedIndex: event.selectedIndex);
     }
   }
 }

@@ -7,5 +7,7 @@ abstract class HomeEvent extends Equatable{
 
 
 class UpdateHomeEvent extends HomeEvent{
+final int selectedIndex;
 
+UpdateHomeEvent({required this.selectedIndex});
 }

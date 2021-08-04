@@ -7,7 +7,7 @@ import 'package:flutter_news_app/bloc/authentication/authentication_event.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_bloc.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_event.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_state.dart';
-import 'package:flutter_news_app/presentation/widgets/text_form_field_widget.dart';
+import 'package:flutter_news_app/presentation/authentication/widgets/text_form_field_widget.dart';
 import 'package:flutter_news_app/repositories/user_repository.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

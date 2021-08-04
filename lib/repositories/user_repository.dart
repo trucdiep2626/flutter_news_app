@@ -13,29 +13,15 @@ class UserRepository{
   }
   //
   //auth change user stream
-  Stream <UserModel> get user{
-    return _auth.authStateChanges().map((User? user) => userFromFirebaseUser(user!)!);
-  }
+  // Stream <UserModel> get user{
+  //   return _auth.authStateChanges().map((User? user) => userFromFirebaseUser(user!)!);
+  // }
 
   //sign in with email and password
   Future signInWithEmailAndPassword(String email, String password)async{
-    //  return await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
-    try{
-      UserCredential result =await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
-      User? user= result.user;
-
-      return userFromFirebaseUser(user!);
-    }catch(e){
-      log(e.toString());
-      return null;
-    }
-  }
-
-  //register
-  Future signUpWithEmailAndPassword(String email, String password)async{
-    await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password);
+   return await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
     // try{
-    //   UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    //   UserCredential result =await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
     //   User? user= result.user;
     //
     //   return userFromFirebaseUser(user!);
@@ -43,6 +29,11 @@ class UserRepository{
     //   log(e.toString());
     //   return null;
     // }
+  }
+
+  //register
+  Future signUpWithEmailAndPassword(String email, String password)async{
+    await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password);
   }
 
   //sign out
