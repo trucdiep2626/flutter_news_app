@@ -33,7 +33,18 @@ class UserRepository{
 
   //register
   Future signUpWithEmailAndPassword(String email, String password)async{
-    await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password);
+    try{
+      UserCredential user =  await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
+      return null;
+    }catch(_){
+      return  await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password);
+    }
+
+    //log(user.toString()+'________________________');
+  //  if (user !=null)
+    //  return null;
+
+
   }
 
   //sign out

@@ -19,7 +19,7 @@ class AppConstants{
       fontWeight: FontWeight.bold,
     ),
   );
-
+  static Color iconColor =Colors.black38;
   static Color activeColor = Colors.black ;
   static Color unActiveColor = Colors.black26 ;
 }

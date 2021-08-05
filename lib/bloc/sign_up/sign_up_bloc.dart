@@ -30,10 +30,17 @@ class SignUpBloc extends Bloc<SignUpEvent,SignUpState>{
   Stream<SignUpState> _mapSignUpWithEmailEventToState(SignUpWithEmailEvent event) async*{
     yield SignUpState.loading();
     try{
-      await userRepository.signUpWithEmailAndPassword(event.email, event.password);
+      var user =await userRepository.signUpWithEmailAndPassword(event.email, event.password);
+      if(user ==null)
+        {
+          yield SignUpState.failure();
+          yield SignUpState.initial();
+          return;
+        }
       yield SignUpState.success();
     }catch(_){
       yield SignUpState.failure();
+      yield SignUpState.initial();
     }
   }
   Stream<SignUpState> _mapSetPasswordToSignUpEventToState(SetPasswordToSignUpEvent event) async*{

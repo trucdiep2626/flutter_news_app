@@ -31,11 +31,12 @@ class SignInBloc extends Bloc<SignInEvent,SignInState>{
   Stream<SignInState> _mapSignInWithEmailEventToState(SignInWithEmailEvent event) async*{
     yield SignInState.loading();
     try{
-      log(event.email);
-      log(event.password);
+    //  log(event.email);
+    //  log(event.password);
+      if(event.email != null && event.password !=null)
       await userRepository.signInWithEmailAndPassword(event.email, event.password);
-      log(event.email);
-      log(event.password);
+     // log(event.email);
+      //log(event.password);
      yield SignInState.success();
    }catch(_){
      yield SignInState.failure();

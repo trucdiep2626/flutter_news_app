@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   const TextFormFieldWidget(
@@ -23,19 +24,24 @@ class TextFormFieldWidget extends StatelessWidget {
       autocorrect: false,
       controller: controller,
       validator: validator,
-      obscureText: hintText == 'password' ? true : false,
+      obscureText: hintText == 'Mật khẩu' ? true : false,
       maxLines: 1,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.start,
       decoration: InputDecoration(
+        errorStyle: TextStyle(
+          fontSize: 15.sp,
+          color: Colors.redAccent,
+          fontWeight:  FontWeight.normal,
+        ),
         hintText: hintText,
-        hintStyle: TextStyle(
-            fontSize: ScreenUtil().setSp(15),
-            fontFamily: 'MS',
-            fontWeight: FontWeight.w500,
-            color: Colors.grey),
-        /* border:
-               (hintText == 'Notes') ? InputBorder.none : UnderlineInputBorder(),*/
+        hintStyle:  GoogleFonts.nunito(
+          textStyle: TextStyle(
+            fontSize: 18.sp,
+            color: Colors.grey,
+            fontWeight:  FontWeight.w500,
+          ),
+        )
       ),
     );
   }

@@ -1,8 +1,9 @@
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/models/article.dart';
-import 'package:flutter_news_app/presentation/home/widgets/article_view.dart';
+import 'package:flutter_news_app/presentation/article_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -34,7 +35,25 @@ class ArticleTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  ClipRRect(
+                  article.thumbnail==''?
+                Container(
+                  alignment: Alignment.center,
+               decoration:BoxDecoration(
+                   color: Colors.black12,
+                   borderRadius: BorderRadius.circular(6)),
+               width: ScreenUtil().screenWidth,
+                  height: 200,
+                  child: Text('No Image',
+                  textAlign: TextAlign.center,
+                  style:  GoogleFonts.nunito(
+                    textStyle: TextStyle(
+                      fontSize: 20.sp,
+                      color: Colors.black38,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),),
+              )
+                      :  ClipRRect(
                       borderRadius: BorderRadius.circular(6),
                       child: Image.network(  article.thumbnail!,
                         height: 200.h,
