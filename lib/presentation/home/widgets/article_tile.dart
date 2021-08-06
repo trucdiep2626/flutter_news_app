@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/models/article.dart';
-import 'package:flutter_news_app/presentation/article_view.dart';
+import 'package:flutter_news_app/presentation/article_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -18,7 +18,7 @@ class ArticleTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ArticleView(article: article)));
+                builder: (context) => ArticleScreen(article: article)));
       },
       child: Container(
           margin: EdgeInsets.only(bottom: 20.h),
@@ -35,31 +35,34 @@ class ArticleTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  article.thumbnail==''?
-                Container(
-                  alignment: Alignment.center,
-               decoration:BoxDecoration(
-                   color: Colors.black12,
-                   borderRadius: BorderRadius.circular(6)),
-               width: ScreenUtil().screenWidth,
-                  height: 200,
-                  child: Text('No Image',
-                  textAlign: TextAlign.center,
-                  style:  GoogleFonts.nunito(
-                    textStyle: TextStyle(
-                      fontSize: 20.sp,
-                      color: Colors.black38,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),),
-              )
-                      :  ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: Image.network(  article.thumbnail!,
-                        height: 200.h,
-                        width: ScreenUtil().screenWidth,
-                        fit: BoxFit.cover,
-                      )),
+                  article.thumbnail == ''
+                      ? Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.black12,
+                              borderRadius: BorderRadius.circular(6)),
+                          width: ScreenUtil().screenWidth,
+                          height: 200,
+                          child: Text(
+                            'No Image',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.nunito(
+                              textStyle: TextStyle(
+                                fontSize: 20.sp,
+                                color: Colors.black38,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Image.network(
+                            article.thumbnail!,
+                            height: 200.h,
+                            width: ScreenUtil().screenWidth,
+                            fit: BoxFit.cover,
+                          )),
                   SizedBox(
                     height: 12.h,
                   ),
@@ -82,7 +85,7 @@ class ArticleTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     softWrap: false,
-                    style:GoogleFonts.nunito(
+                    style: GoogleFonts.nunito(
                       textStyle: TextStyle(
                         fontSize: 19.sp,
                         color: Colors.black54,
@@ -95,14 +98,13 @@ class ArticleTile extends StatelessWidget {
                   ),
                   Text(
                     getTime(article.pubDate!)!,
-                    style:GoogleFonts.nunito(
+                    style: GoogleFonts.nunito(
                       textStyle: TextStyle(
                         fontSize: 15.sp,
                         color: Colors.black38,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                   )
                 ],
               ),
@@ -112,13 +114,14 @@ class ArticleTile extends StatelessWidget {
   }
 
   String? getTime(String time) {
-    int pubDate =DateTime.parse(time).millisecondsSinceEpoch;
+    int pubDate = DateTime.parse(time).millisecondsSinceEpoch;
     int frowPubDateToNow = DateTime.now().millisecondsSinceEpoch - pubDate;
-    return (frowPubDateToNow <= 86400000 && frowPubDateToNow >=3600000)
-        ?   (frowPubDateToNow/3600000).ceil().toString()+ ' giờ trước'
-        : (frowPubDateToNow < 3600000 && frowPubDateToNow >=60000)
-        ? '${frowPubDateToNow/60000} phút trước':
-        frowPubDateToNow <60000?'Vừa cập nhật':
-    DateFormat('dd-MM-yyyy').format(DateTime.parse(time));
+    return (frowPubDateToNow <= 86400000 && frowPubDateToNow >= 3600000)
+        ? (frowPubDateToNow / 3600000).ceil().toString() + ' giờ trước'
+        : (frowPubDateToNow < 3600000 && frowPubDateToNow >= 60000)
+            ? '${frowPubDateToNow / 60000} phút trước'
+            : frowPubDateToNow < 60000
+                ? 'Vừa cập nhật'
+                : DateFormat('dd-MM-yyyy').format(DateTime.parse(time));
   }
 }

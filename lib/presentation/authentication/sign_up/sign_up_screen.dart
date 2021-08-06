@@ -7,6 +7,7 @@ import 'package:flutter_news_app/bloc/authentication/authentication_event.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_bloc.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_event.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_state.dart';
+import 'package:flutter_news_app/presentation/authentication/widgets/button_widget.dart';
 import 'package:flutter_news_app/presentation/authentication/widgets/flash_message.dart';
 import 'package:flutter_news_app/presentation/authentication/widgets/text_form_field_widget.dart';
 import 'package:flutter_news_app/repositories/user_repository.dart';
@@ -17,10 +18,11 @@ class SignUpScreen extends StatelessWidget {
   final UserRepository userRepository;
 
   SignUpScreen({required this.userRepository});
-  // final AuthService _authService = AuthService();
+
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SignUpBloc>(
@@ -29,10 +31,10 @@ class SignUpScreen extends StatelessWidget {
             listener: (context, signUpState) {
           if (signUpState.isFailure) {
             ScaffoldMessenger.of(context).showSnackBar(FlashMessage(
-              type: 'Fail',
+              success: false,
+              message: 'Tạo tài khoản không thành công',
             ));
           } else if (signUpState.isSubmitting) {
-            print('Logging in');
           } else if (signUpState.isSuccess) {
             Navigator.pop(
                 context,
@@ -41,7 +43,8 @@ class SignUpScreen extends StatelessWidget {
                   'password': passwordController.text
                 }));
             ScaffoldMessenger.of(context).showSnackBar(FlashMessage(
-              type: 'Success',
+              success: true,
+              message: 'Tạo tài khoản thành công',
             ));
           }
         }, builder: (context, signUpState) {
@@ -54,80 +57,43 @@ class SignUpScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormFieldWidget(
-                        onChanged: (val) {
-                          BlocProvider.of<SignUpBloc>(context).add(
-                              SetEmailToSignUpEvent(
-                                  email: emailController.text));
-                        },
-                        controller: emailController,
-                        validator: (val) => signUpState.isValidEmail
-                            ? null
-                            : 'Định dạng email chưa đúng',
-                        hintText: 'Email'),
-                    TextFormFieldWidget(
-                        onChanged: (val) {
-                          BlocProvider.of<SignUpBloc>(context).add(
-                              SetPasswordToSignUpEvent(
-                                  password: passwordController.text));
-                        },
-                        controller: passwordController,
-                        validator: (val) => signUpState.isValidPassword
-                            ? null
-                            : 'Mật khẩu cần ít nhất 6 kí tự',
-                        hintText: 'Mật khẩu'),
-                    // ( signUpState.isValidEmail ==false ||signUpState.isValidPassword ==false )?
-                    // Container(
-                    //   margin: EdgeInsets.only(
-                    //       top: ScreenUtil().setHeight(40),
-                    //       bottom: ScreenUtil().setHeight(20)
-                    //   ),
-                    //   padding: EdgeInsets.symmetric(
-                    //     vertical: ScreenUtil().setHeight(10),
-                    //     horizontal: ScreenUtil().setHeight(40),
-                    //   ),
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(20),
-                    //       color: Colors.black26
-                    //   ),
-                    //   child: Text('Tạo tài khoản',
-                    //     style: GoogleFonts.nunito(
-                    //       textStyle: TextStyle(
-                    //         fontSize: 18.sp,
-                    //         color: Colors.black,
-                    //         fontWeight:  FontWeight.bold,
-                    //       ),
-                    //     )
-                    //
-                    //   ),
-                    // ):
-                    GestureDetector(
-                      onTap: () {
+                      onChanged: (val) {
                         BlocProvider.of<SignUpBloc>(context).add(
-                            SignUpWithEmailEvent(
-                                email: emailController.text,
+                            SetEmailToSignUpEvent(email: emailController.text));
+                      },
+                      controller: emailController,
+                      validator: (val) => signUpState.isValidEmail
+                          ? null
+                          : 'Email có định dạng chưa chính xác',
+                      hintText: 'Email',
+                      showPassword: false,
+                    ),
+                    TextFormFieldWidget(
+                      onChanged: (val) {
+                        BlocProvider.of<SignUpBloc>(context).add(
+                            SetPasswordToSignUpEvent(
                                 password: passwordController.text));
                       },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: ScreenUtil().setHeight(40),
-                            bottom: ScreenUtil().setHeight(20)),
-                        padding: EdgeInsets.symmetric(
-                          vertical: ScreenUtil().setHeight(10),
-                          horizontal: ScreenUtil().setHeight(40),
-                        ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.blueAccent),
-                        child: Text('Tạo tài khoản',
-                            style: GoogleFonts.nunito(
-                              textStyle: TextStyle(
-                                fontSize: 18.sp,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                      ),
+                      controller: passwordController,
+                      validator: (val) => signUpState.isValidPassword
+                          ? null
+                          : 'Mật khẩu cần ít nhất 6 kí tự',
+                      hintText: 'Mật khẩu',
+                      showPassword: signUpState.showPassword,
+                      onPressedIconButton: () {
+                        BlocProvider.of<SignUpBloc>(context).add(
+                            ShowPasswordEventInSignUp(
+                                showPassword: !signUpState.showPassword));
+                      },
                     ),
+                    ButtonWidget(
+                        onTap: () {
+                          BlocProvider.of<SignUpBloc>(context).add(
+                              SignUpWithEmailEvent(
+                                  email: emailController.text,
+                                  password: passwordController.text));
+                        },
+                        labelText: 'Tạo tài khoản'),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);

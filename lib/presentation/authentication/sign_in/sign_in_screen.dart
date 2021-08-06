@@ -8,10 +8,12 @@ import 'package:flutter_news_app/bloc/sign_in/sign_in_bloc.dart';
 import 'package:flutter_news_app/bloc/sign_in/sign_in_event.dart';
 import 'package:flutter_news_app/bloc/sign_in/sign_in_state.dart';
 import 'package:flutter_news_app/presentation/authentication/sign_up/sign_up_screen.dart';
+import 'package:flutter_news_app/presentation/authentication/widgets/button_widget.dart';
 import 'package:flutter_news_app/presentation/authentication/widgets/flash_message.dart';
 import 'package:flutter_news_app/presentation/authentication/widgets/text_form_field_widget.dart';
 import 'package:flutter_news_app/repositories/user_repository.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignInScreen extends StatelessWidget {
   // final AuthService _authService = AuthService();
@@ -29,18 +31,17 @@ class SignInScreen extends StatelessWidget {
         create: (context) => SignInBloc(userRepository: userRepository),
         child: BlocConsumer<SignInBloc, SignInState>(
             listener: (context, signInState) {
-          //    log(signInState.runtimeType.toString());
           if (signInState.isFailure) {
-            //  log(signInState.toString());
             ScaffoldMessenger.of(context).showSnackBar(FlashMessage(
-              type: 'Fail',
+              success: false,
+              message: 'Đăng nhập không thành công',
             ));
           } else if (signInState.isSubmitting) {
-            print('Logging in');
           } else if (signInState.isSuccess) {
             BlocProvider.of<AuthenticationBloc>(context).add(SignedInEvent());
             ScaffoldMessenger.of(context).showSnackBar(FlashMessage(
-              type: 'Success',
+              success: true,
+              message: 'Đăng nhập thành công',
             ));
           }
         }, builder: (context, signInState) {
@@ -53,72 +54,43 @@ class SignInScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormFieldWidget(
-                        onChanged: (val) {
-                          BlocProvider.of<SignInBloc>(context).add(
-                              SetEmailToSignInEvent(
-                                  email: emailController.text));
-                        },
-                        controller: emailController,
-                        validator: (val) => signInState.isValidEmail
-                            ? null
-                            : 'Invalid email format',
-                        hintText: 'email'),
+                      onChanged: (val) {
+                        BlocProvider.of<SignInBloc>(context).add(
+                            SetEmailToSignInEvent(email: emailController.text));
+                      },
+                      controller: emailController,
+                      validator: (val) => signInState.isValidEmail
+                          ? null
+                          : 'Email không được bỏ trống',
+                      hintText: 'Email',
+                      showPassword: false,
+                    ),
                     TextFormFieldWidget(
-                        onChanged: (val) {
+                      onChanged: (val) {
+                        BlocProvider.of<SignInBloc>(context).add(
+                            SetPasswordToSignInEvent(
+                                password: passwordController.text));
+                      },
+                      controller: passwordController,
+                      validator: (val) => signInState.isValidPassword
+                          ? null
+                          : 'Mật khẩu không được bỏ trống',
+                      hintText: 'Mật khẩu',
+                      showPassword: signInState.showPassword,
+                      onPressedIconButton: () {
+                        BlocProvider.of<SignInBloc>(context).add(
+                            ShowPasswordEventInSignIn(
+                                showPassword: !signInState.showPassword));
+                      },
+                    ),
+                    ButtonWidget(
+                        onTap: () {
                           BlocProvider.of<SignInBloc>(context).add(
-                              SetPasswordToSignInEvent(
+                              SignInWithEmailEvent(
+                                  email: emailController.text,
                                   password: passwordController.text));
                         },
-                        controller: passwordController,
-                        validator: (val) => signInState.isValidPassword
-                            ? null
-                            : 'Invalid password format',
-                        hintText: 'password'),
-                    (emailController.text == null ||
-                            passwordController.text == null)
-                        ? Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.black12),
-                            child: Text(
-                              'Sign in',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: (emailController.text == '' ||
-                                    passwordController.text == '')
-                                ? () {}
-                                : () {
-                                    //   BlocProvider.of<SignInBloc>(context).add(SetEmailToSignInEvent(email: emailController.text));
-                                    //   BlocProvider.of<SignInBloc>(context).add(SetPasswordToSignInEvent(password: passwordController.text));
-                                    BlocProvider.of<SignInBloc>(context).add(
-                                        SignInWithEmailEvent(
-                                            email: emailController.text,
-                                            password: passwordController.text));
-                                  },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                  top: ScreenUtil().setHeight(40),
-                                  bottom: ScreenUtil().setHeight(20)),
-                              padding: EdgeInsets.symmetric(
-                                vertical: ScreenUtil().setHeight(10),
-                                horizontal: ScreenUtil().setHeight(40),
-                              ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.blueAccent),
-                              child: Text(
-                                'Đăng nhập',
-                                style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(18),
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
+                        labelText: 'Đăng nhập'),
                     GestureDetector(
                       onTap: () async {
                         account = await Navigator.push(
@@ -126,7 +98,6 @@ class SignInScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (_) => SignUpScreen(
                                     userRepository: userRepository)));
-
                         if (account != null) {
                           BlocProvider.of<SignInBloc>(context).add(
                               SignInWithEmailEvent(
@@ -138,7 +109,10 @@ class SignInScreen extends StatelessWidget {
                       },
                       child: Text(
                         'Tạo tài khoản mới',
-                        style: TextStyle(color: Colors.blueAccent),
+                        style: GoogleFonts.nunito(
+                            textStyle: TextStyle(
+                          color: Colors.blueAccent,
+                        )),
                       ),
                     )
                   ],

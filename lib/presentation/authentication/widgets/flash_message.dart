@@ -1,47 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FlashMessage extends SnackBar {
-  final String type;
+  final bool success;
+  final String message;
 
-  FlashMessage({required this.type})
+  FlashMessage({required this.success, required this.message})
       : super(
-    duration: Duration(milliseconds: 500),
-    content: Row(
-      children: [
-        Visibility(
-          visible: type == 'Success' ? true : false,
-          child: Expanded(
-              flex: 1,
-              child: Icon(
-                Icons.check_circle,
-                color: Colors.green,
-              )),
-        ),
-        Visibility(
-          visible: type == 'Fail' ? true : false,
-          child: Expanded(
-              flex: 1,
-              child: Icon(
-                Icons.error,
-                color: Colors.red,
-              )),
-        ),
-        Expanded(
-          flex: 10,
-          child: Text(
-            type == 'Success'
-                ? 'Thành công'
-                : 'Đã có lỗi xảy ra. Vui lòng thử lại',
-            style: TextStyle(color: Colors.white),
+          duration: Duration(milliseconds: 500),
+          content: Row(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Icon(
+                    success ? Icons.check_circle : Icons.error,
+                    color: success ? Colors.green : Colors.red,
+                  )),
+              Expanded(
+                flex: 10,
+                child: Text(
+                  message,
+                  style: GoogleFonts.nunito(
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-        )
-      ],
-    ),
-    elevation: 0,
-    // backgroundColor: Colors.gre,
-    behavior: SnackBarBehavior.floating,
-    shape:
-    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-  );
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        );
 }

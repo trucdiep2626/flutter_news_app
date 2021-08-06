@@ -19,15 +19,14 @@ import 'package:flutter_news_app/models/user.dart';
 
 import 'package:flutter_news_app/repositories/user_repository.dart';
 
-
 class HomeScreen extends StatelessWidget {
   final UserRepository userRepository;
 
   HomeScreen({required this.userRepository});
-  // TabController _tabController ;
+
   int selectedIndex = 0;
   ScrollController _scrollController = ScrollController();
-  bool onTap= false;
+  bool onTap = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,86 +46,78 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           else if (homeState is HomeLoadDataSuccessState) {
-            /*  return DefaultTabController(
-                initialIndex: 0,
-                length: categories.length,
-                child: Builder( builder: (BuildContext context){*/
-//_scrollController.animateTo(homeState.selectedIndex*10.0, duration: new Duration(seconds: 1), curve: Curves.ease);
-
-
-                  return Scaffold(
-                    backgroundColor: Colors.white,
-                    appBar:_appBar(context),
-                    body:
-                    Column(
-                     children: [
-                        Expanded(
-                          flex: 1,
-                          child: Align(
-                              alignment: Alignment.topLeft,
-                         child:
-
-                           ListView.builder(
-                                //  reverse: true,
-                               //   cacheExtent: 3,
-                                  physics: ScrollPhysics(),
-                                  addAutomaticKeepAlives: false,
-                                  //key: Key(categories.length),
-                                  controller: _scrollController,
-                                  scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  itemCount: categories.length,
-                                  itemBuilder: (context, index)   {
-                                    log(homeState.selectedIndex.toString()+' '+index.toString());
-                                    log((onTap==true &&  homeState.selectedIndex==index).toString());
-                                    if (onTap==true &&   homeState.selectedIndex==index)
-                                    {
-                                       _scrollController.animateTo( homeState.selectedIndex*60.0, duration:  Duration(microseconds: 1), curve: Curves.ease);
-                                    }
-                                    if (onTap==true &&   homeState.selectedIndex==8)
-                                    {
-                                      _scrollController.animateTo( homeState.selectedIndex*60.0, duration:  Duration(microseconds: 1), curve: Curves.ease);
-                                    }
-                                    return GestureDetector(
-                                      key: Key(index.toString()),
-                                      onTap: () {
-                                        BlocProvider.of<HomeBloc>(context).add(
-                                            UpdateHomeEvent(selectedIndex: index));
-                                        onTap=true;
-
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: 10.h, horizontal: 10.h),
-                                        height: 50.h,
-                                        child: Text(
-                                          categories[index].name,
-                                          style: homeState.selectedIndex == index
-                                              ? AppConstants.activeStyle
-                                              : AppConstants.unActiveStyle,
-                                        ),
-                                      ),
-                                    );
-                                  })
-                           ),
-                       ),
-                         Expanded(
-                           flex: 10,
-                           child: ListView.builder(
-                                  itemCount: homeState.news.length,
-                                  itemBuilder: (context, index) {
-                                    return   ArticleTile(article: homeState.news[index]);
-                                  }),
-                         )
-                   //   )
-                    ],
+            return Scaffold(
+              backgroundColor: Colors.white,
+              appBar: _appBar(context),
+              body: Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: ListView.builder(
+                            //  reverse: true,
+                            //   cacheExtent: 3,
+                            physics: ScrollPhysics(),
+                            addAutomaticKeepAlives: false,
+                            //key: Key(categories.length),
+                            controller: _scrollController,
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: categories.length,
+                            itemBuilder: (context, index) {
+                              if (onTap == true &&
+                                  homeState.selectedIndex == index) {
+                                _scrollController.animateTo(
+                                    homeState.selectedIndex * 60.0,
+                                    duration: Duration(microseconds: 1),
+                                    curve: Curves.ease);
+                              }
+                              if (onTap == true &&
+                                  homeState.selectedIndex == 8) {
+                                _scrollController.animateTo(
+                                    homeState.selectedIndex * 60.0,
+                                    duration: Duration(microseconds: 1),
+                                    curve: Curves.ease);
+                              }
+                              return GestureDetector(
+                                key: Key(index.toString()),
+                                onTap: () {
+                                  BlocProvider.of<HomeBloc>(context).add(
+                                      UpdateHomeEvent(selectedIndex: index));
+                                  onTap = true;
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 10.h, horizontal: 10.h),
+                                  height: 50.h,
+                                  child: Text(
+                                    categories[index].name,
+                                    style: homeState.selectedIndex == index
+                                        ? AppConstants.activeStyle
+                                        : AppConstants.unActiveStyle,
+                                  ),
+                                ),
+                              );
+                            })),
                   ),
-               //   );}
+                  Expanded(
+                    flex: 10,
+                    child: ListView.builder(
+                        itemCount: homeState.news.length,
+                        itemBuilder: (context, index) {
+                          return ArticleTile(article: homeState.news[index]);
+                        }),
+                  )
+                  //   )
+                ],
+              ),
+              //   );}
               //  ),
-
             );
           }
-          return SafeArea(child:  Scaffold(
+          return SafeArea(
+              child: Scaffold(
             appBar: _appBar(context),
             body: Center(
               child: Container(
@@ -137,62 +128,8 @@ class HomeScreen extends StatelessWidget {
         }));
   }
 
-
-
-  Widget tabItem(BuildContext context, int index,)
-  {
-    return  GestureDetector(
-      onTap: () {
-        //
-        // BlocProvider.of<HomeBloc>(context).add(
-        //     UpdateHomeEvent(selectedIndex: index));
-      //  log(DefaultTabController.of(context)!.index.toString());
-         DefaultTabController.of(context)!.index=index;
-      log(DefaultTabController.of(context)!.index.toString());
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(
-            vertical: 10.h, horizontal: 10.h),
-        height: 50.h,
-        child: Text(
-          categories[index].name,
-        ),
-      ),
-    );
-  }
-
   AppBar _appBar(BuildContext context) {
     return AppBar(
-    //  bottom:
-      /*TabBar(
-          onTap: (index)
-          {
-            log(index.toString()+'_____________');
-            BlocProvider.of<HomeBloc>(context).add(
-                UpdateHomeEvent(selectedIndex: index));
-            //  log(DefaultTabController.of(context)!.index.toString());
-            //    DefaultTabController.of(context)!.index=index;
-          },
-          labelColor: Colors.black,
-          unselectedLabelColor: AppConstants.unActiveColor,
-          unselectedLabelStyle: AppConstants.unActiveStyle,
-          indicatorSize: TabBarIndicatorSize.label,
-          isScrollable: true,
-          indicatorColor: Colors.white,
-          labelStyle: AppConstants.activeStyle,
-          tabs:[
-            tabItem(context, 0),
-            tabItem(context, 1),
-            tabItem(context, 2),
-            tabItem(context, 3),
-            tabItem(context, 4),
-            tabItem(context, 5),
-            tabItem(context, 6),
-            tabItem(context, 7),
-            tabItem(context, 8),
-
-          ]
-      ),*/
       centerTitle: true,
       elevation: 0,
       backgroundColor: Colors.white,
@@ -200,14 +137,11 @@ class HomeScreen extends StatelessWidget {
         onTap: () async {
           selectedIndex = await Navigator.push(
               context, MaterialPageRoute(builder: (_) => CategoryScreen()));
-        BlocProvider.of<HomeBloc>(context).add(
-        UpdateHomeEvent(selectedIndex: selectedIndex));
-         // DefaultTabController.of(context)!.index=selectedIndex;
+          BlocProvider.of<HomeBloc>(context)
+              .add(UpdateHomeEvent(selectedIndex: selectedIndex));
+          onTap = true;
         },
-        child: Icon(
-            Icons.menu,
-            color:  AppConstants.iconColor
-        ),
+        child: Icon(Icons.menu, color: AppConstants.iconColor),
       ),
       title: Image.network(
         'https://s.vnecdn.net/vnexpress/i/v20/logos/vne_logo_rss.png',

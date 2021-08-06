@@ -6,49 +6,53 @@ import 'package:flutter_news_app/bloc/sign_in/sign_in_state.dart';
 import 'package:flutter_news_app/repositories/user_repository.dart';
 import 'package:flutter_news_app/validators/validators.dart';
 
-class SignInBloc extends Bloc<SignInEvent,SignInState>{
+class SignInBloc extends Bloc<SignInEvent, SignInState> {
   UserRepository userRepository;
 
-
-  SignInBloc({required this.userRepository}):super(SignInState.initial());
-
-
+  SignInBloc({required this.userRepository}) : super(SignInState.initial());
 
   @override
-  Stream<SignInState> mapEventToState(SignInEvent event) async*{
-   if(event is SetEmailToSignInEvent){
-     yield* _mapSetEmailToSignInEventToState(event);
-   }
-   if(event is SetPasswordToSignInEvent){
-     yield* _mapSetPasswordToSignInEventToState(event);
-   }
-   if(event is SignInWithEmailEvent){
-     yield* _mapSignInWithEmailEventToState(event);
-   }
-  
+  Stream<SignInState> mapEventToState(SignInEvent event) async* {
+    if (event is SetEmailToSignInEvent) {
+      yield* _mapSetEmailToSignInEventToState(event);
+    }
+    if (event is SetPasswordToSignInEvent) {
+      yield* _mapSetPasswordToSignInEventToState(event);
+    }
+    if (event is SignInWithEmailEvent) {
+      yield* _mapSignInWithEmailEventToState(event);
+    }
+    if (event is ShowPasswordEventInSignIn) {
+      yield* _mapShowPasswordEventInSignInToState(event);
+    }
   }
 
-  Stream<SignInState> _mapSignInWithEmailEventToState(SignInWithEmailEvent event) async*{
+  Stream<SignInState> _mapSignInWithEmailEventToState(
+      SignInWithEmailEvent event) async* {
     yield SignInState.loading();
-    try{
-    //  log(event.email);
-    //  log(event.password);
-      if(event.email != null && event.password !=null)
-      await userRepository.signInWithEmailAndPassword(event.email, event.password);
-     // log(event.email);
-      //log(event.password);
-     yield SignInState.success();
-   }catch(_){
-     yield SignInState.failure();
-   }
-  }
-  Stream<SignInState> _mapSetPasswordToSignInEventToState(SetPasswordToSignInEvent event) async*{
-  // log(event.password);
-    yield state.update(isValidPassword: Validators.isValidPassword(event.password));
+    try {
+      if (event.email != null && event.password != null)
+        await userRepository.signInWithEmailAndPassword(
+            event.email, event.password);
+      yield SignInState.success();
+    } catch (_) {
+      yield SignInState.failure();
+      yield SignInState.initial();
+    }
   }
 
-  Stream<SignInState> _mapSetEmailToSignInEventToState(SetEmailToSignInEvent event) async*{
-    //log(event.email);
-    yield state.update(isValidEmail: Validators.isValidEmail(event.email));
+  Stream<SignInState> _mapSetPasswordToSignInEventToState(
+      SetPasswordToSignInEvent event) async* {
+    yield state.update(isValidPassword: event.password != '');
+  }
+
+  Stream<SignInState> _mapSetEmailToSignInEventToState(
+      SetEmailToSignInEvent event) async* {
+    yield state.update(isValidEmail: event.email !='');
+  }
+
+  Stream<SignInState> _mapShowPasswordEventInSignInToState(
+      ShowPasswordEventInSignIn event) async* {
+    yield state.update(showPassword: event.showPassword);
   }
 }

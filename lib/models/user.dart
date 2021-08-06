@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class UserModel{
+class UserModel {
   final String userId;
 
-  UserModel({ required this.userId});
+  UserModel({required this.userId});
 }

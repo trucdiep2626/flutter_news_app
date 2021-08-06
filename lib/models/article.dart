@@ -11,16 +11,16 @@ class Article {
   List? categories;
 
   Article(
-      {  this.title,
-        this.pubDate,
-        this.link,
-        this.guid,
-        this.author,
-        this.thumbnail,
-        this.description,
-        this.content,
-        this.enclosure,
-        this.categories});
+      {this.title,
+      this.pubDate,
+      this.link,
+      this.guid,
+      this.author,
+      this.thumbnail,
+      this.description,
+      this.content,
+      this.enclosure,
+      this.categories});
 }
 
 // class Enclosure {

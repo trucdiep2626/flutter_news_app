@@ -10,32 +10,25 @@ import 'package:flutter_news_app/presentation/authentication/sign_in/sign_in_scr
 import 'package:flutter_news_app/presentation/home/home_screen.dart';
 import 'package:flutter_news_app/repositories/user_repository.dart';
 
-
-
 class AuthenticationScreen extends StatelessWidget {
-
-
   final UserRepository _userRepository = UserRepository();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (context)=>
-    AuthenticationBloc(userRepository: _userRepository)
-      ..add(AuthenticationEventStarted()),
-      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(builder: (context, authenticationState)
-      {
-        if (authenticationState is AuthenticationStateSuccess)
-        {
+    return BlocProvider(
+      create: (context) => AuthenticationBloc(userRepository: _userRepository)
+        ..add(AuthenticationEventStarted()),
+      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (context, authenticationState) {
+        if (authenticationState is AuthenticationStateSuccess) {
           return HomeScreen(userRepository: _userRepository);
         }
-        if (authenticationState is AuthenticationStateFailure)
-        {
+        if (authenticationState is AuthenticationStateFailure) {
           return SignInScreen(userRepository: _userRepository);
         }
         return Center(
           child: CircularProgressIndicator(),
-        ) ;
-      }),);
+        );
+      }),
+    );
   }
-
-
 }
