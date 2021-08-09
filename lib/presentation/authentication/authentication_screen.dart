@@ -10,7 +10,7 @@ import 'package:flutter_news_app/presentation/authentication/sign_in/sign_in_scr
 import 'package:flutter_news_app/presentation/home/home_screen.dart';
 
 class AuthenticationScreen extends StatelessWidget {
-  final UserRepository _userRepository = UserRepository();
+  final UserRepository _userRepository = UserRepositoryImpl() ;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

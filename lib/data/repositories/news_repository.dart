@@ -1,11 +1,32 @@
 import 'package:flutter_news_app/data/models/article.dart';
 import 'package:flutter_news_app/data/models/category.dart';
-import 'package:flutter_news_app/data/providers/news_provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_news_app/data/models/article.dart';
+import 'package:flutter_news_app/data/models/category.dart';
 
-class NewsRepository {
-  NewsProvider _newsProvider = NewsProvider();
+abstract class NewsRepository {
 
+  Future<List<Article>> fetchNews({required Category category}) ;
+
+}
+class NewsRepositoryImpl extends NewsRepository {
   Future<List<Article>> fetchNews({required Category category}) async {
-    return await _newsProvider.fetchNews(category: category);
+    List<Article> news = [];
+    var url = Uri.parse(category.url);
+
+    var response = await http.get(url);
+
+    var jsonData = jsonDecode(response.body);
+
+    if (jsonData['status'] == 'ok') {
+      jsonData['items'].forEach((element) {
+        if (element['title'] != null && element['description'] != null) {
+          Article article = Article.fromJson(element);
+          news.add(article);
+        }
+      });
+    }
+    return news;
   }
 }

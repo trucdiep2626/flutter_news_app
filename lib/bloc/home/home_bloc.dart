@@ -24,9 +24,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapUpdateHomeEventToState(UpdateHomeEvent event) async* {
    yield HomeLoadingDataState(selectedIndex: event.selectedIndex);
     try  {
-     // log('))))))))))))))))))))))))))))))');
-      final news = await NewsRepository().fetchNews(category: categories[event.selectedIndex]);
-      log(news.length.toString()+'+++++++++++++++++');
+      final news = await NewsRepositoryImpl().fetchNews(category: categories[event.selectedIndex]);
+
       yield HomeLoadDataSuccessState(news: news,selectedIndex: event.selectedIndex);
     } catch (_) {
       log('error');
