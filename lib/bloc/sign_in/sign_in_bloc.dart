@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/bloc/sign_in/sign_in_event.dart';
 import 'package:flutter_news_app/bloc/sign_in/sign_in_state.dart';
-import 'package:flutter_news_app/repositories/user_repository.dart';
+import 'package:flutter_news_app/data/repositories/user_repository.dart';
 import 'package:flutter_news_app/validators/validators.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {

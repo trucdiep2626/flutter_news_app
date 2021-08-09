@@ -21,8 +21,20 @@ class Article {
       this.content,
       this.enclosure,
       this.categories});
+
+  factory Article.fromJson(Map<String,dynamic> json)
+  => Article(
+    title: json['title'],
+    guid: json['guid'],
+    categories: json['categories']??null,
+    author: json['author'],
+    description: json['description'],
+    link: json['link'],
+    pubDate: DateTime.parse(json['pubDate']).toString(),
+    content: json['content'],
+    enclosure: json['enclosure']??null,
+    thumbnail: json['thumbnail'],
+  );
 }
 
-// class Enclosure {
-//   Enclosure();
-// }
+

@@ -1,16 +1,14 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_news_app/bloc/authentication/authentication_bloc.dart';
-import 'package:flutter_news_app/bloc/authentication/authentication_event.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_bloc.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_event.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_state.dart';
+import 'package:flutter_news_app/data/repositories/user_repository.dart';
 import 'package:flutter_news_app/presentation/authentication/widgets/button_widget.dart';
 import 'package:flutter_news_app/presentation/authentication/widgets/flash_message.dart';
 import 'package:flutter_news_app/presentation/authentication/widgets/text_form_field_widget.dart';
-import 'package:flutter_news_app/repositories/user_repository.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_event.dart';
 import 'package:flutter_news_app/bloc/sign_up/sign_up_state.dart';
-import 'package:flutter_news_app/repositories/user_repository.dart';
+import 'package:flutter_news_app/data/repositories/user_repository.dart';
 import 'package:flutter_news_app/validators/validators.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {

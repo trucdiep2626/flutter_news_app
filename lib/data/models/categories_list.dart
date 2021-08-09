@@ -1,4 +1,5 @@
-import 'package:flutter_news_app/models/category.dart';
+
+import 'category.dart';
 
 List<Category> categories = [
   Category(

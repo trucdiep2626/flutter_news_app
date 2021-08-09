@@ -1,8 +1,8 @@
 import 'dart:developer';
+import 'package:flutter_news_app/data/models/categories_list.dart';
+import 'package:flutter_news_app/data/models/category.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app/models/categories_list.dart';
-import 'package:flutter_news_app/models/category.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'constants.dart';

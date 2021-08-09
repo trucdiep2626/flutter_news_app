@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_news_app/repositories/user_repository.dart';
+import 'package:flutter_news_app/data/repositories/user_repository.dart';
 
 import 'authentication_event.dart';
 import 'authentication_state.dart';

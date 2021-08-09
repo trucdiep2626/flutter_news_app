@@ -5,10 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_news_app/bloc/authentication/authentication_event.dart';
 import 'package:flutter_news_app/bloc/authentication/authentication_state.dart';
-import 'package:flutter_news_app/models/user.dart';
+import 'package:flutter_news_app/data/repositories/user_repository.dart';
 import 'package:flutter_news_app/presentation/authentication/sign_in/sign_in_screen.dart';
 import 'package:flutter_news_app/presentation/home/home_screen.dart';
-import 'package:flutter_news_app/repositories/user_repository.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   final UserRepository _userRepository = UserRepository();

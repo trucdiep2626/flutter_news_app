@@ -9,15 +9,13 @@ import 'package:flutter_news_app/bloc/authentication/authentication_event.dart';
 import 'package:flutter_news_app/bloc/home/home_bloc.dart';
 import 'package:flutter_news_app/bloc/home/home_event.dart';
 import 'package:flutter_news_app/bloc/home/home_state.dart';
-import 'package:flutter_news_app/models/categories_list.dart';
+import 'package:flutter_news_app/data/models/categories_list.dart';
+import 'package:flutter_news_app/data/repositories/user_repository.dart';
 import 'package:flutter_news_app/presentation/category_screen.dart';
 import 'package:flutter_news_app/presentation/constants.dart';
 import 'package:flutter_news_app/presentation/home/widgets/article_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_news_app/models/user.dart';
-
-import 'package:flutter_news_app/repositories/user_repository.dart';
 
 class HomeScreen extends StatelessWidget {
   final UserRepository userRepository;

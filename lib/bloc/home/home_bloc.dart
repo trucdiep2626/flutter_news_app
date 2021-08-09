@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/bloc/home/home_event.dart';
 import 'package:flutter_news_app/bloc/home/home_state.dart';
-import 'package:flutter_news_app/models/categories_list.dart';
-import 'package:flutter_news_app/repositories/news_repository.dart';
-import 'package:flutter_news_app/repositories/user_repository.dart';
+import 'package:flutter_news_app/data/models/categories_list.dart';
+import 'package:flutter_news_app/data/repositories/news_repository.dart';
+import 'package:flutter_news_app/data/repositories/user_repository.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UserRepository userRepository;
@@ -25,7 +25,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
    yield HomeLoadingDataState(selectedIndex: event.selectedIndex);
     try  {
      // log('))))))))))))))))))))))))))))))');
-      final news = await NewsRepository().getNews(category: categories[event.selectedIndex]);
+      final news = await NewsRepository().fetchNews(category: categories[event.selectedIndex]);
       log(news.length.toString()+'+++++++++++++++++');
       yield HomeLoadDataSuccessState(news: news,selectedIndex: event.selectedIndex);
     } catch (_) {
